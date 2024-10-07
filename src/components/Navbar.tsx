@@ -6,6 +6,17 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
+import { ModeToggle } from "./ModeToggle";
+import SignOut from "./SignOut";
+
+const Navbar = () => {
+  return (
+    <>
+      <DesktopNavbar />
+    </>
+  );
+};
+
 function DesktopNavbar() {
   return (
     <div className="hidden border-separate border-b bg-background md:block">
@@ -21,6 +32,10 @@ function DesktopNavbar() {
               />
             ))}
           </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <ModeToggle />
+          <SignOut />
         </div>
       </nav>
     </div>
@@ -48,3 +63,4 @@ function NavbarItem({ link, label }: { link: string; label: string }) {
     </div>
   );
 }
+export default Navbar;
