@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { FormSchema } from "@/lib/zod";
+import { FormSchema, LoginFormType } from "@/lib/zod";
 import Link from "next/link";
 import { logIn } from "@/lib/server/actions";
 
@@ -33,7 +33,7 @@ export default function LoginForm() {
     formState: { isSubmitting },
   } = form;
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: LoginFormType) {
     try {
       //await new Promise((resolve) => setTimeout(resolve, 10000));
 
@@ -45,7 +45,7 @@ export default function LoginForm() {
     reset();
   }
   return (
-    <div className="w-full max-w-sm rounded-lg border-t-8 border-primary-300 bg-card p-5 shadow-lg">
+    <div className="w-full max-w-sm rounded-lg border-t-8 border-primary bg-card p-5 shadow-lg">
       <h1 className="my-4 text-xl font-bold">LogIn</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
