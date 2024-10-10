@@ -52,7 +52,7 @@ const config: Config = {
         },
       },
       backgroundImage: {
-        "dotted-pattern": "url('/assets/images/dotted-pattern.png')",
+        pattern: "url('/assets/images/bg-pattern.png')",
       },
       borderRadius: {
         lg: "var(--radius)",
