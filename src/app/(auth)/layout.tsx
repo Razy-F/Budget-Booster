@@ -6,7 +6,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex-center bg-no-repeat flex-col bg-primary-50  min-h-screen w-full bg-dotted-pattern bg-cover bg-fixed bg-center">
+    <div className="flex-center bg-no-repeat flex-col bg-primary-50  min-h-screen w-full bg-pattern bg-cover bg-fixed bg-center">
       <Logo />
       {children}
     </div>
