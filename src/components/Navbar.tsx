@@ -80,6 +80,16 @@ const MobileNavbar = () => {
     </div>
   );
 };
+
+function NavbarItem({
+  link,
+  label,
+  callBackClick,
+}: {
+  link: string;
+  label: string;
+  callBackClick?: () => void;
+}) {
   const pathname = usePathname();
   const isActive = pathname === link;
   return (
@@ -91,6 +101,9 @@ const MobileNavbar = () => {
           "w-full justify-start text-lg text-muted-foreground hover:text-foreground",
           isActive && "text-foreground"
         )}
+        onClick={() => {
+          if (callBackClick) callBackClick();
+        }}
       >
         {label}
       </Link>
@@ -100,4 +113,5 @@ const MobileNavbar = () => {
     </div>
   );
 }
+
 export default Navbar;
