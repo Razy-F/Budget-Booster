@@ -1,13 +1,15 @@
 "use client";
-import React from "react";
-import Logo from "./Logo";
+import React, { useState } from "react";
+import Logo, { LogoMobile } from "./Logo";
 import { items } from "@/data/navlinks";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import { ModeToggle } from "./ModeToggle";
 import SignOut from "./SignOut";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { Menu } from "lucide-react";
 
 const Navbar = () => {
   return (
@@ -34,7 +36,7 @@ function DesktopNavbar() {
             ))}
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <ModeToggle />
           <SignOut />
         </div>
