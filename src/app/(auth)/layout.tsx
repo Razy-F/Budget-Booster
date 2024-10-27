@@ -6,10 +6,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex-center bg-no-repeat flex-col bg-primary-50  min-h-screen w-full bg-pattern bg-cover bg-fixed bg-center">
+    <div className="flex-center flex-col bg-primary-50  min-h-screen w-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]">
       <Logo />
       <div
-        className="absolute left-1/2 top-0 -z-10 -translate-x-1/2 blur-3xl xl:-top-6"
+        className="absolute left-1/2 top-0 -z-10 -translate-x-1/2 blur-3xl"
         aria-hidden="true"
       >
         <div
