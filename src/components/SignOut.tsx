@@ -10,7 +10,7 @@ const SignOut = () => {
     signOut();
   };
   return (
-    <Button variant="outline" onClick={handleSignOutBtn}>
+    <Button variant="outline" size="icon" onClick={handleSignOutBtn}>
       {loading && (
         <svg
           aria-hidden="true"
