@@ -15,9 +15,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { FormSchema, LoginFormType } from "@/lib/zod";
 import Link from "next/link";
-import { logIn } from "@/lib/server/actions";
+import { logIn } from "@/lib/server/actions/authActions";
+import { FormSchema, LoginFormType } from "@/lib/zod/schema/loginForm";
 
 export default function LoginForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
