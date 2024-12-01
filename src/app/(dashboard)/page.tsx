@@ -1,4 +1,10 @@
 import { auth } from "@/auth";
+import CreateTransactionDialog from "@/components/CreateTransactionDialog";
+import { Button } from "@/components/ui/button";
+import prisma from "@/lib/prisma";
+import { redirect } from "next/navigation";
+import React from "react";
+
 const DashboardPage = async () => {
   const user = await auth();
   if (!user || !user.user || !user.user.id) {
@@ -13,6 +19,10 @@ const DashboardPage = async () => {
   if (!userSettings) {
     redirect("/wizard");
   }
+
+  return (
+    <div className="h-full">
+      <div className="border-b relative">
         <div className="top-0 absolute w-full -z-[11] rotate-180">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
             <defs>
