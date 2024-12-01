@@ -42,6 +42,28 @@ const DashboardPage = async () => {
             ></path>
           </svg>
         </div>
+
+        <div className="container flex flex-wrap items-center justify-between gap-6 py-8 ">
+          <p className="text-3xl font-bold">Hello, {user.user.name}! 👋</p>
+          <div className="flex items-center gap-3">
+            <CreateTransactionDialog type="income">
+              <Button
+                variant={"outline"}
+                className="border-emerald-900 border-4"
+              >
+                New Income
+              </Button>
+            </CreateTransactionDialog>
+            <CreateTransactionDialog type="expense">
+              <Button variant={"outline"} className="border-rose-900 border-4">
+                New Expense
+              </Button>
+            </CreateTransactionDialog>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default DashboardPage;
