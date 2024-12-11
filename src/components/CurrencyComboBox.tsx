@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/popover";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { currencies, Currency } from "@/data/currencies";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import SkeletonWrapper from "./SkeletonWrapper";
 
 export function CurrencyComboBox() {
@@ -28,6 +29,10 @@ export function CurrencyComboBox() {
     null
   );
 
+  const userSettings = useQuery<UserSettings>({
+    queryKey: ["userSettings"],
+    queryFn: () => fetch("/api/user-settings").then((res) => res.json()),
+  });
   if (isDesktop) {
     return (
       <SkeletonWrapper isLoading={userSettings.isFetching}>
