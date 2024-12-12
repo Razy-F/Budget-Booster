@@ -33,6 +33,22 @@ export function CurrencyComboBox() {
     queryKey: ["userSettings"],
     queryFn: () => fetch("/api/user-settings").then((res) => res.json()),
   });
+  const mutation = useMutation({
+    mutationFn: UpdateUserCurrency,
+    onSuccess: (data: UserSettings) => {
+      toast.success("Currency updated successfully 🎉", {
+        id: "update-currency",
+      });
+      setSelectedOption(
+        currencies.find((currency) => currency.value === data.currency) || null
+      );
+    },
+    onError: (e) => {
+      toast.error("Something went wrong", {
+        id: "update-currency",
+      });
+    },
+  });
   if (isDesktop) {
     return (
       <SkeletonWrapper isLoading={userSettings.isFetching}>
