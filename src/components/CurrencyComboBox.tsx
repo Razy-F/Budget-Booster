@@ -49,6 +49,22 @@ export function CurrencyComboBox() {
       });
     },
   });
+  const selectOption = useCallback(
+    (currency: Currency | null) => {
+      if (!currency) {
+        toast.error("Please select a currency");
+        return;
+      }
+
+      toast.loading("Updating currency...", {
+        id: "update-currency",
+      });
+
+      const currencyVal: Currencies = currency.value as Currencies;
+      mutation.mutate(currencyVal);
+    },
+    [mutation]
+  );
   if (isDesktop) {
     return (
       <SkeletonWrapper isLoading={userSettings.isFetching}>
