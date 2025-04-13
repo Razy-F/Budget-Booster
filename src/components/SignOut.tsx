@@ -11,7 +11,7 @@ const SignOut = () => {
   };
   return (
     <Button variant="outline" size="icon" onClick={handleSignOutBtn}>
-      {loading && (
+      {loading ? (
         <svg
           aria-hidden="true"
           className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-secondary"
@@ -28,8 +28,9 @@ const SignOut = () => {
             fill="currentFill"
           />
         </svg>
+      ) : (
+        <LogOut />
       )}
-      {!loading && <LogOut />}
     </Button>
   );
 };

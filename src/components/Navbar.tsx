@@ -13,10 +13,10 @@ import { Menu } from "lucide-react";
 
 const Navbar = () => {
   return (
-    <>
+    <header>
       <DesktopNavbar />
       <MobileNavbar />
-    </>
+    </header>
   );
 };
 
@@ -90,7 +90,7 @@ function NavbarItem({
 }: {
   link: string;
   label: string;
-  callBackClick?: () => void;
+  callBackClick?: VoidFunction;
 }) {
   const pathname = usePathname();
   const isActive = pathname === link;
