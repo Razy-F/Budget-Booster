@@ -37,12 +37,15 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CreateCategory } from "@/lib/server/actions/categories";
 import { Category } from "@prisma/client";
 import { toast } from "sonner";
+import { useTheme } from "next-themes";
 
 type Props = {
   type: TransactionType;
 };
 const CreateCategoryDialog = ({ type }: Props) => {
+  const { resolvedTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const { resolvedTheme } = useTheme();
   const form = useForm<CreateCategorySchemaType>({
     resolver: zodResolver(CreateCategorySchema),
     defaultValues: {
@@ -119,11 +122,10 @@ const CreateCategoryDialog = ({ type }: Props) => {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Name" {...field} />
+                    <Input placeholder="Category" {...field} />
                   </FormControl>
                   <FormDescription>
-                    Transaction amount{" "}
-                    <span className="text-destructive font-extrabold">*</span>
+                    This is how your category will appear in the app
                   </FormDescription>
                 </FormItem>
               )}
@@ -166,6 +168,7 @@ const CreateCategoryDialog = ({ type }: Props) => {
                           onEmojiSelect={(emoji: { native: string }) =>
                             field.onChange(emoji.native)
                           }
+                          theme={resolvedTheme}
                         />
                       </PopoverContent>
                     </Popover>
