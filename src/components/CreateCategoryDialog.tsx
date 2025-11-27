@@ -41,9 +41,9 @@ import { useTheme } from "next-themes";
 
 type Props = {
   type: TransactionType;
+  successCallback: (category: Category) => void;
 };
-const CreateCategoryDialog = ({ type }: Props) => {
-  const { resolvedTheme } = useTheme();
+const CreateCategoryDialog = ({ type, successCallback }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { resolvedTheme } = useTheme();
   const form = useForm<CreateCategorySchemaType>({
@@ -51,6 +51,7 @@ const CreateCategoryDialog = ({ type }: Props) => {
     defaultValues: {
       type,
       name: "",
+      icon: "",
     },
   });
 
@@ -63,6 +64,7 @@ const CreateCategoryDialog = ({ type }: Props) => {
           id: "create-category",
         });
 
+      successCallback(data);
       await queryClient.invalidateQueries({
         queryKey: ["categories"],
       });

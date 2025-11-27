@@ -31,6 +31,14 @@ const CategoryPicker = ({ type }: Props) => {
   const selectedCategory = categoriesQuery.data?.find(
     (category: Category) => category.name === value
   );
+
+  const successCallback = (category: Category) => {
+    onChange(category.name);
+    setOpen((prev) => {
+      console.log("this is prev ", prev);
+      return !prev;
+    });
+  };
   return (
     <Popover modal={true} open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
@@ -51,7 +59,7 @@ const CategoryPicker = ({ type }: Props) => {
       <PopoverContent className="w-[200px] p-0">
         <Command onSubmit={(e) => e.preventDefault()}>
           <CommandInput placeholder="Search category ..." />
-          <CreateCategoryDialog type={type} />
+          <CreateCategoryDialog type={type} successCallback={successCallback} />
           <CommandEmpty>
             <p>Category not found</p>
             <p className="text-xs text-muted-foreground">
