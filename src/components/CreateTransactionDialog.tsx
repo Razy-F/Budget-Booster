@@ -99,7 +99,11 @@ const CreateTransactionDialog = ({ children, type }: Props) => {
                   <FormItem>
                     <FormLabel className="capitalize">{field.name}</FormLabel>
                     <FormControl>
-                      <CategoryPicker type={type} />
+                      <CategoryPicker
+                        type={type}
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
                     </FormControl>
                     <FormDescription>
                       Select a category for this transaction{" "}

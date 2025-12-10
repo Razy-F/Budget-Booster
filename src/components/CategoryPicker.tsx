@@ -16,12 +16,14 @@ import {
 import CreateCategoryDialog from "./CreateCategoryDialog";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+
 type Props = {
   type: TransactionType;
+  value: string;
+  onChange: (name: string) => void;
 };
-const CategoryPicker = ({ type }: Props) => {
+const CategoryPicker = ({ type, value, onChange }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [value, setValue] = useState("");
   const categoriesQuery = useQuery({
     queryKey: ["categories", type],
     queryFn: () =>
@@ -73,7 +75,7 @@ const CategoryPicker = ({ type }: Props) => {
                   <CommandItem
                     key={category.name}
                     onSelect={() => {
-                      setValue(category.name);
+                      onChange(category.name);
                       setIsOpen((prev) => !prev);
                     }}
                   >
