@@ -26,6 +26,11 @@ import {
 import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
 import CategoryPicker from "./CategoryPicker";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import { Button } from "./ui/button";
+import { format } from "date-fns";
+import { Calendar as CalenderIcon } from "lucide-react";
+import { Calendar } from "./ui/calendar";
 
 type Props = {
   children: React.ReactNode;
@@ -107,6 +112,47 @@ const CreateTransactionDialog = ({ children, type }: Props) => {
                     </FormControl>
                     <FormDescription>
                       Select a category for this transaction{" "}
+                      <span className="text-destructive font-extrabold">*</span>
+                    </FormDescription>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="date"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="capitalize">{field.name}</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-[200px] pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalenderIcon className="ml-auto size-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          className="rounded-md border"
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormDescription>
+                      Select a date for this transaction{" "}
                       <span className="text-destructive font-extrabold">*</span>
                     </FormDescription>
                   </FormItem>
