@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import CreateTransactionDialog from "@/components/CreateTransactionDialog";
+import Overview from "@/components/Overview";
 import { Button } from "@/components/ui/button";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
@@ -61,17 +62,18 @@ const DashboardPage = async () => {
                 variant={"outline"}
                 className="border-emerald-900 border-4"
               >
-                New Income
+                New Income 🤑
               </Button>
             </CreateTransactionDialog>
             <CreateTransactionDialog type="expense">
               <Button variant={"outline"} className="border-rose-900 border-4">
-                New Expense
+                New Expense 🙃
               </Button>
             </CreateTransactionDialog>
           </div>
         </div>
       </div>
+      <Overview userSettings={userSettings} />
     </div>
   );
 };
