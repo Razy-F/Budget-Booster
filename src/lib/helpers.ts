@@ -1,4 +1,5 @@
-function dateToUTCDate(date: Date) {
+import { currencies } from "@/data/currencies";
+export function dateToUTCDate(date: Date) {
   return new Date(
     Date.UTC(
       date.getFullYear(),
@@ -10,4 +11,14 @@ function dateToUTCDate(date: Date) {
       date.getMilliseconds()
     )
   );
+}
+
+const currencyLocaleMap = new Map(currencies.map((c) => [c.value, c.locale]));
+
+export function getFormatterForCurrency(currency: string) {
+  const locale = currencyLocaleMap.get(currency);
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency,
+  });
 }
