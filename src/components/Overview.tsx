@@ -3,6 +3,15 @@
 import { UserSettings } from "@prisma/client";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
+import { differenceInDays, format, startOfMonth } from "date-fns";
+import { useState } from "react";
+
+import { MAX_DATE_RANGE_DAYS } from "@/constants";
+import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import CategoriesStats from "./CategoriesStats";
+import StatsCards from "./StatsCards";
+
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "./ui/calendar";
 function Overview({ userSettings }: { userSettings: UserSettings }) {
@@ -12,6 +21,9 @@ function Overview({ userSettings }: { userSettings: UserSettings }) {
   });
   return (
     <div>
+      <div className="container flex flex-wrap items-end justify-between gap-2 py-6">
+        <h2 className="text-3xl font-bold">Overview</h2>
+        <div className="flex items-center gap-3">
           <div className="grid gap-2">
             <Popover>
               <PopoverTrigger asChild>
@@ -66,6 +78,16 @@ function Overview({ userSettings }: { userSettings: UserSettings }) {
               </PopoverContent>
             </Popover>
           </div>
+        </div>
+      </div>
+      <div className="container flex w-full flex-col gap-2">
+        <StatsCards userSettings={userSettings} from={date.from} to={date.to} />
+        <CategoriesStats
+          userSettings={userSettings}
+          from={date.from}
+          to={date.to}
+        />
+      </div>
     </div>
   );
 }
