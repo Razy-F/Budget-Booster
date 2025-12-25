@@ -1,11 +1,15 @@
 "use client";
+
+import { useCurrencyFormatter } from "@/hooks/use-currency-formatter";
+import { dateToUTCDate } from "@/lib/helpers";
 import { getBalanceAction } from "@/lib/server/actions/balance";
 import { UserSettings } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
-import SkeletonWrapper from "./SkeletonWrapper";
 import { TrendingDown, TrendingUp, Wallet } from "lucide-react";
+import { ReactNode, useCallback } from "react";
+import CountUp from "react-countup";
+import SkeletonWrapper from "./SkeletonWrapper";
 import { Card } from "./ui/card";
-import { useCurrencyFormatter } from "@/hooks/use-currency-formatter";
 
 type Props = {
   userSettings: UserSettings;
@@ -82,6 +86,13 @@ function StatsCard({ formatter, value, title, icon }: StatsCardProps) {
       {icon}
       <div className="flex flex-col items-start gap-0">
         <p className="text-muted-foreground">{title}</p>
+        <CountUp
+          formattingFn={formatFn}
+          end={value}
+          decimal="2"
+          className="text-2xl"
+          redraw={false}
+        />
       </div>
     </Card>
   );
