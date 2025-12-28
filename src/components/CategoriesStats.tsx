@@ -34,6 +34,13 @@ function CategoriesStats({ userSettings, from, to }: Props) {
           data={statsQuery.data ?? []}
         />
       </SkeletonWrapper>
+      <SkeletonWrapper isLoading={statsQuery.isFetching}>
+        <CategoriesCard
+          formatter={formatter}
+          type="expense"
+          data={statsQuery.data ?? []}
+        />
+      </SkeletonWrapper>
     </div>
   );
 }
