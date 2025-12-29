@@ -5,6 +5,8 @@ import prisma from "@/lib/prisma";
 import {
   CreateCategorySchema,
   CreateCategorySchemaType,
+  deleteCategorySchema,
+  DeleteCategorySchemaType,
 } from "@/lib/zod/schema/categories";
 import { redirect } from "next/navigation";
 
@@ -30,3 +32,20 @@ export async function CreateCategory(form: CreateCategorySchemaType) {
     },
   });
 }
+
+export type getCategoriesActionDataType = Awaited<
+  ReturnType<typeof getCategoriesAction>
+>;
+
+export async function getCategoriesAction(data: OverviewSchemaType) {
+  const user = await auth();
+  if (!user || !user.user || !user.user.id) {
+    redirect("/log-in");
+  }
+  const parsedBody = overviewSchema.safeParse(data);
+  if (!parsedBody.success) {
+    throw new Error(parsedBody.error.message);
+  }
+  const { from, to } = parsedBody.data;
+}
+
