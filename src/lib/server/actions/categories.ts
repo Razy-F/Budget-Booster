@@ -47,5 +47,28 @@ export async function getCategoriesAction(data: OverviewSchemaType) {
     throw new Error(parsedBody.error.message);
   }
   const { from, to } = parsedBody.data;
+
+  return await getCategoriesStats(user.user.id, from, to);
+}
+
+async function getCategoriesStats(userId: string, from: Date, to: Date) {
+  return await prisma.transaction.groupBy({
+    by: ["type", "category", "categoryIcon"],
+    where: {
+      userId,
+      date: {
+        gte: from,
+        lte: to,
+      },
+    },
+    _sum: {
+      amount: true,
+    },
+    orderBy: {
+      _sum: {
+        amount: "desc",
+      },
+    },
+  });
 }
 
