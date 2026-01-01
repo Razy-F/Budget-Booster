@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import CreateTransactionDialog from "@/components/CreateTransactionDialog";
+import History from "@/components/History";
 import Overview from "@/components/Overview";
 import { Button } from "@/components/ui/button";
 import prisma from "@/lib/prisma";
@@ -74,6 +75,7 @@ const DashboardPage = async () => {
         </div>
       </div>
       <Overview userSettings={userSettings} />
+      <History userSettings={userSettings} />
     </div>
   );
 };
