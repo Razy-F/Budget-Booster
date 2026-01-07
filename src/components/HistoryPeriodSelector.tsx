@@ -2,6 +2,13 @@ import { GetHistoryPeriodResType } from "@/app/api/history-periods/route";
 import { Period, Timeframe } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
 import SkeletonWrapper from "./SkeletonWrapper";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 
 function HistoryPeriodSelector({
@@ -42,9 +49,46 @@ function HistoryPeriodSelector({
           isLoading={historyPeriods.isFetching}
           fullWidth={false}
         >
+          <YearSelector
+            period={period}
+            setPeriod={setPeriod}
+            years={historyPeriods.data || []}
+          />
         </SkeletonWrapper>
       </div>
     </div>
   );
 }
 
+function YearSelector({
+  period,
+  setPeriod,
+  years,
+}: {
+  period: Period;
+  setPeriod: (period: Period) => void;
+  years: GetHistoryPeriodResType;
+}) {
+  return (
+    <Select
+      value={period.year.toString()}
+      onValueChange={(value) => {
+        setPeriod({
+          month: period.month,
+          year: parseInt(value),
+        });
+      }}
+    >
+      <SelectTrigger className="w-[180px]">
+        <SelectValue placeholder="Select a year" />
+      </SelectTrigger>
+      <SelectContent>
+        {years.map((year) => (
+          <SelectItem key={year} value={year.toString()}>
+            {year}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  );
+}
