@@ -55,11 +55,31 @@ function HistoryPeriodSelector({
             years={historyPeriods.data || []}
           />
         </SkeletonWrapper>
+        {timeframe === "month" && (
+          <SkeletonWrapper
+            isLoading={historyPeriods.isFetching}
+            fullWidth={false}
+          >
+            <MonthSelector period={period} setPeriod={setPeriod} />
+          </SkeletonWrapper>
+        )}
       </div>
     </div>
   );
 }
 
+export default HistoryPeriodSelector;
+
+function MonthSelector({
+  period,
+  setPeriod,
+}: {
+  period: Period;
+  setPeriod: (period: Period) => void;
+}) {
+  return (
+  );
+}
 function YearSelector({
   period,
   setPeriod,
