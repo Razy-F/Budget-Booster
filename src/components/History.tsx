@@ -49,6 +49,13 @@ export default History;
 function CustomTooltip({ active, payload, formatter }: any) {
   return (
     <div className="min-w-[300px] rounded border bg-background p-4">
+      <TooltipRow
+        formatter={formatter}
+        label="Expense"
+        value={expense}
+        bgColor="bg-red-500"
+        textColor="text-red-500"
+      />
     </div>
   );
 }
@@ -69,6 +76,10 @@ function TooltipRow({
   return (
     <div className="flex items-center gap-2">
       <div className={cn("size-4 rounded-full", bgColor)}></div>
+      <div className="flex w-full justify-between">
+        <p className="text-sm text-muted-foreground">{label}</p>
+        <div className={cn("text-sm font-bold", textColor)}>
+        </div>
       </div>
     </div>
   );
