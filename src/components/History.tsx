@@ -2,6 +2,8 @@ import { UserSettings } from "@prisma/client";
 import HistoryPeriodSelector from "./HistoryPeriodSelector";
 import { Badge } from "./ui/badge";
 import SkeletonWrapper from "./SkeletonWrapper";
+import { cn } from "@/lib/utils";
+import CountUp from "react-countup";
 function History({ userSettings }: { userSettings: UserSettings }) {
   const [timeframe, settTmeframe] = useState<Timeframe>("month");
   const [period, setPeriod] = useState<Period>({
@@ -73,12 +75,24 @@ function TooltipRow({
   bgColor: string;
   textColor: string;
 }) {
+  const formattingFn = useCallback(
+    (value: number) => formatter.format(value),
+    [formatter]
+  );
   return (
     <div className="flex items-center gap-2">
       <div className={cn("size-4 rounded-full", bgColor)}></div>
       <div className="flex w-full justify-between">
         <p className="text-sm text-muted-foreground">{label}</p>
         <div className={cn("text-sm font-bold", textColor)}>
+          <CountUp
+            duration={0.5}
+            preserveValue
+            end={value}
+            decimals={0}
+            formattingFn={formattingFn}
+            className="text-sm"
+          />
         </div>
       </div>
     </div>
