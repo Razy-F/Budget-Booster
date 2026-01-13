@@ -22,3 +22,19 @@ export async function GET(req: Request) {
     });
   }
 
+  const data = await getHistoryData(userId, parsedBody.data.timeframe, {
+    month: parsedBody.data.month,
+    year: parsedBody.data.year,
+  });
+
+  return Response.json(data);
+}
+
+export type GetHistoryDataResType = Awaited<ReturnType<typeof getHistoryData>>;
+
+async function getHistoryData(
+  userId: string,
+  timeframe: Timeframe,
+  period: Period
+) {
+}
