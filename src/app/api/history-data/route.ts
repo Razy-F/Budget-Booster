@@ -1,3 +1,5 @@
+import prisma from "@/lib/prisma";
+import { Period, Timeframe } from "@/lib/types";
 import requireUserId from "@/utils";
 import { z } from "zod";
 
@@ -36,5 +38,21 @@ async function getHistoryData(
   userId: string,
   timeframe: Timeframe,
   period: Period
+) {
+  switch (timeframe) {
+    case "year":
+      return await getYearHistoryData(userId, period.year);
+    case "month":
+      return await getMonthHistoryData(userId, period.year, period.month);
+  }
+}
+
+async function getYearHistoryData(userId: string, year: number) {
+}
+
+async function getMonthHistoryData(
+  userId: string,
+  year: number,
+  month: number
 ) {
 }
