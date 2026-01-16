@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { Period, Timeframe } from "@/lib/types";
 import requireUserId from "@/utils";
+import { getDaysInMonth } from "date-fns";
 import { z } from "zod";
 
 const getHistoryDataSchema = z.object({
@@ -65,6 +66,26 @@ async function getYearHistoryData(userId: string, year: number) {
     ],
   });
   if (!result || result.length === 0) return [];
+
+  const history = [];
+  for (let i = 0; i < 12; i++) {
+    let expense = 0;
+    let income = 0;
+
+    const month = result.find((row) => row.month === i);
+    if (month) {
+      expense = month._sum.expense || 0;
+      income = month._sum.income || 0;
+    }
+
+    history.push({
+      year,
+      month: i,
+      expense,
+      income,
+    });
+  }
+  return history;
 }
 
 async function getMonthHistoryData(
@@ -91,4 +112,25 @@ async function getMonthHistoryData(
   });
   if (!result || result.length === 0) return [];
 
+  const history = [];
+  const daysInMonth = getDaysInMonth(new Date(year, month));
+  for (let i = 0; i < daysInMonth; i++) {
+    let expense = 0;
+    let income = 0;
+
+    const day = result.find((row) => row.day === i);
+    if (day) {
+      expense = day._sum.expense || 0;
+      income = day._sum.income || 0;
+    }
+
+    history.push({
+      expense,
+      income,
+      year,
+      month,
+      day: i,
+    });
+  }
+  return history;
 }
