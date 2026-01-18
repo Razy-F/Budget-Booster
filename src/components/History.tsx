@@ -23,6 +23,10 @@ function History({ userSettings }: { userSettings: UserSettings }) {
           period.month
       ).then((res) => res.json()),
   });
+
+  const dataAvailable =
+    historyDataQuery.data && historyDataQuery.data.length > 0;
+
   return (
     <div className="container">
       <h2 className="mt-12 text-3xl font-bold">History</h2>
@@ -54,6 +58,20 @@ function History({ userSettings }: { userSettings: UserSettings }) {
             </div>
           </CardTitle>
         </CardHeader>
+        <CardContent>
+          <SkeletonWrapper isLoading={historyDataQuery.isFetching}>
+            {dataAvailable && (
+            )}
+            {!dataAvailable && (
+              <Card className="flex h-[300px] flex-col items-center justify-center bg-background">
+                No data for the selected period
+                <p className="text-sm text-muted-foreground">
+                  Try selecting a different period or adding new transactions
+                </p>
+              </Card>
+            )}
+          </SkeletonWrapper>
+        </CardContent>
       </Card>
     </div>
   );
