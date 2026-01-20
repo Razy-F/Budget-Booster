@@ -3,7 +3,9 @@ import HistoryPeriodSelector from "./HistoryPeriodSelector";
 import { Badge } from "./ui/badge";
 import SkeletonWrapper from "./SkeletonWrapper";
 import {
+  CartesianGrid,
   ResponsiveContainer,
+  XAxis,
 } from "recharts";
 import { GetHistoryDataResType } from "@/app/api/history-data/route";
 import { cn } from "@/lib/utils";
@@ -109,6 +111,34 @@ function History({ userSettings }: { userSettings: UserSettings }) {
                       />
                     </linearGradient>
                   </defs>
+
+                  <CartesianGrid
+                    strokeDasharray={"5 5"}
+                    strokeOpacity={"0.2"}
+                    vertical={false}
+                  />
+
+                  <XAxis
+                    stroke="#888888"
+                    fontSize={12}
+                    tickLine={false}
+                    axisLine={false}
+                    padding={{ left: 5, right: 5 }}
+                    dataKey={(data) => {
+                      const { year, month, day } = data;
+                      const date = new Date(year, month, day || 1);
+                      //return "month" for x-axis data if timeframe is month else return days
+                      if (timeframe === "year") {
+                        return date.toLocaleString("default", {
+                          month: "long",
+                        });
+                      }
+
+                      return date.toLocaleString("default", {
+                        day: "2-digit",
+                      });
+                    }}
+                  />
               </ResponsiveContainer>
             )}
             {!dataAvailable && (
