@@ -2,6 +2,9 @@ import { UserSettings } from "@prisma/client";
 import HistoryPeriodSelector from "./HistoryPeriodSelector";
 import { Badge } from "./ui/badge";
 import SkeletonWrapper from "./SkeletonWrapper";
+import {
+  ResponsiveContainer,
+} from "recharts";
 import { GetHistoryDataResType } from "@/app/api/history-data/route";
 import { cn } from "@/lib/utils";
 import CountUp from "react-countup";
@@ -61,6 +64,52 @@ function History({ userSettings }: { userSettings: UserSettings }) {
         <CardContent>
           <SkeletonWrapper isLoading={historyDataQuery.isFetching}>
             {dataAvailable && (
+              <ResponsiveContainer width={"100%"} height={300}>
+                <BarChart
+                  height={300}
+                  data={historyDataQuery.data}
+                  barCategoryGap={5}
+                >
+                  {/* define linear gradient for chart */}
+                  <defs>
+                    <linearGradient
+                      id="incomeBar"
+                      x1={"0"}
+                      y1={"0"}
+                      x2={"0"}
+                      y2={"1"}
+                    >
+                      <stop
+                        offset={"0"}
+                        stopColor="#10b981"
+                        stopOpacity={"1"}
+                      />
+                      <stop
+                        offset={"1"}
+                        stopColor="#10b981"
+                        stopOpacity={"0"}
+                      />
+                    </linearGradient>
+                    <linearGradient
+                      id="expenseBar"
+                      x1={"0"}
+                      y1={"0"}
+                      x2={"0"}
+                      y2={"1"}
+                    >
+                      <stop
+                        offset={"0"}
+                        stopColor="#ef4444"
+                        stopOpacity={"1"}
+                      />
+                      <stop
+                        offset={"1"}
+                        stopColor="#ef4444"
+                        stopOpacity={"0"}
+                      />
+                    </linearGradient>
+                  </defs>
+              </ResponsiveContainer>
             )}
             {!dataAvailable && (
               <Card className="flex h-[300px] flex-col items-center justify-center bg-background">
