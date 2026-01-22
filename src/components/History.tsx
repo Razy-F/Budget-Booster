@@ -1,11 +1,23 @@
+"use client";
+
+import { getFormatterForCurrency } from "@/lib/helpers";
+import { Period, Timeframe } from "@/lib/types";
 import { UserSettings } from "@prisma/client";
+import { useQuery } from "@tanstack/react-query";
+import { useCallback, useMemo, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import HistoryPeriodSelector from "./HistoryPeriodSelector";
 import { Badge } from "./ui/badge";
 import SkeletonWrapper from "./SkeletonWrapper";
 import {
+import {
+  Bar,
+  BarChart,
   CartesianGrid,
   ResponsiveContainer,
+  Tooltip,
   XAxis,
+  YAxis,
 } from "recharts";
 import { GetHistoryDataResType } from "@/app/api/history-data/route";
 import { cn } from "@/lib/utils";
@@ -139,6 +151,35 @@ function History({ userSettings }: { userSettings: UserSettings }) {
                       });
                     }}
                   />
+
+                  <YAxis
+                    stroke="#888888"
+                    fontSize={12}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+
+                  <Bar
+                    dataKey={"income"}
+                    label="Income"
+                    fill="url(#incomeBar)"
+                    radius={4}
+                    className=" cursor-pointer"
+                  />
+
+                  <Bar
+                    dataKey={"expense"}
+                    label="Expense"
+                    fill="url(#expenseBar)"
+                    radius={4}
+                    className=" cursor-pointer"
+                  />
+
+                  <Tooltip
+                    cursor={{ opacity: 0.1 }}
+                    content={(props) => <CustomTooltip {...props} />}
+                  />
+                </BarChart>
               </ResponsiveContainer>
             )}
             {!dataAvailable && (
@@ -159,6 +200,10 @@ function History({ userSettings }: { userSettings: UserSettings }) {
 export default History;
 
 function CustomTooltip({ active, payload, formatter }: any) {
+  if (!active || !payload || payload.length === 0) return null;
+
+  const data = payload[0].payload;
+  const { expense, income } = data;
   return (
     <div className="min-w-[300px] rounded border bg-background p-4">
       <TooltipRow
