@@ -1,4 +1,5 @@
 import { GetTransactionHistoryResType } from "@/app/api/transaction-history/route";
+import { DataTableColumnHeader } from "./dataTable/ColumnHeader";
 export type TransactionHistoryRow = GetTransactionHistoryResType[0];
 const columns: ColumnDef<TransactionHistoryRow>[] = [
   {
@@ -18,8 +19,15 @@ const columns: ColumnDef<TransactionHistoryRow>[] = [
       );
     },
   },
-];
-
+  {
+    accessorKey: "description",
+    header({ column }) {
+      return <DataTableColumnHeader column={column} title="Description" />;
+    },
+    cell({ row }) {
+      return <div className="capitalize">{row.original.description}</div>;
+    },
+  },
 
 function TransactionTable({ from, to }: { from: Date; to: Date }) {
   return (
