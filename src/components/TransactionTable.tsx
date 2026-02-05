@@ -28,6 +28,22 @@ const columns: ColumnDef<TransactionHistoryRow>[] = [
       return <div className="capitalize">{row.original.description}</div>;
     },
   },
+  {
+    accessorKey: "date",
+    header({ column }) {
+      return <DataTableColumnHeader column={column} title="Category" />;
+    },
+    cell({ row }) {
+      const date = new Date(row.original.date);
+      const formattedDate = date.toLocaleDateString("default", {
+        timeZone: "UTC",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      });
+      return <div className="text-muted-foreground">{formattedDate}</div>;
+    },
+  },
 
 function TransactionTable({ from, to }: { from: Date; to: Date }) {
   return (
