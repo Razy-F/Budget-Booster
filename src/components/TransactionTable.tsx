@@ -1,4 +1,5 @@
 import { GetTransactionHistoryResType } from "@/app/api/transaction-history/route";
+import { useQuery } from "@tanstack/react-query";
 import { DataTableColumnHeader } from "./dataTable/ColumnHeader";
 export type TransactionHistoryRow = GetTransactionHistoryResType[0];
 const columns: ColumnDef<TransactionHistoryRow>[] = [
@@ -44,8 +45,31 @@ const columns: ColumnDef<TransactionHistoryRow>[] = [
       return <div className="text-muted-foreground">{formattedDate}</div>;
     },
   },
+  {
+    accessorKey: "amount",
+    header({ column }) {
+      return <DataTableColumnHeader column={column} title="Amount" />;
+    },
+    cell({ row }) {
+      return (
+        <p className="text-lg rounded-lg bg-gray-400/5 p-2 text-center">
+          {row.original.formattedAmount}
+        </p>
+      );
+    },
+  },
 
 function TransactionTable({ from, to }: { from: Date; to: Date }) {
+  const history = useQuery<GetTransactionHistoryResType>({
+    queryKey: ["transaction", "history", from, to],
+    queryFn: () =>
+      fetch(
+        "/api/transaction-history?from=" +
+          dateToUTCDate(from) +
+          "&to=" +
+          dateToUTCDate(to),
+      ).then((res) => res.json()),
+  });
   return (
     <div className="w-full">
       <div className="flex flex-wrap items-end justify-between gap-2 py-4">
