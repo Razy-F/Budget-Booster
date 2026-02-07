@@ -46,6 +46,26 @@ const columns: ColumnDef<TransactionHistoryRow>[] = [
     },
   },
   {
+    accessorKey: "type",
+    header({ column }) {
+      return <DataTableColumnHeader column={column} title="Type" />;
+    },
+    cell({ row }) {
+      return (
+        <div
+          className={cn(
+            "capitalize rounded-lg text-center p-2",
+            row.original.type === "income" &&
+              "bg-emerald-500/10 text-emerald-500",
+            row.original.type === "expense" && "bg-red-500/10 text-red-500",
+          )}
+        >
+          {row.original.type}
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "amount",
     header({ column }) {
       return <DataTableColumnHeader column={column} title="Amount" />;
@@ -75,9 +95,14 @@ function TransactionTable({ from, to }: { from: Date; to: Date }) {
       <div className="flex flex-wrap items-end justify-between gap-2 py-4">
         <div className="flex gap-2">
       </div>
+      <SkeletonWrapper isLoading={history.isFetching}>
+        <div className="rounded-md border">
+          <Table>
+          </Table>
         </div>
         <div className="flex items-center justify-end space-x-2 py-4">
         </div>
+      </SkeletonWrapper>
     </div>
   );
 }
