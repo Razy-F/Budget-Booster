@@ -90,10 +90,28 @@ function TransactionTable({ from, to }: { from: Date; to: Date }) {
           dateToUTCDate(to),
       ).then((res) => res.json()),
   });
+  const categoriesOptions = useMemo(() => {
+    const categoriesMap = new Map();
+    history.data?.forEach((transaction) => {
+      categoriesMap.set(transaction.category, {
+        value: transaction.category,
+        label: transaction.categoryIcon + " " + transaction.category,
+      });
+    });
+    const uniqueCategories = new Set(categoriesMap.values());
+    return Array.from(uniqueCategories);
+  }, [history.data]);
   return (
     <div className="w-full">
       <div className="flex flex-wrap items-end justify-between gap-2 py-4">
         <div className="flex gap-2">
+          {table.getColumn("category") && (
+            <DataTableFacetedFilter
+              title="Category"
+              column={table.getColumn("category")}
+              options={categoriesOptions}
+            />
+          )}
       </div>
       <SkeletonWrapper isLoading={history.isFetching}>
         <div className="rounded-md border">
