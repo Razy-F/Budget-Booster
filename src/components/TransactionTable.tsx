@@ -116,6 +116,24 @@ function TransactionTable({ from, to }: { from: Date; to: Date }) {
       <SkeletonWrapper isLoading={history.isFetching}>
         <div className="rounded-md border">
           <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext(),
+                            )}
+                      </TableHead>
+                    );
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
           </Table>
         </div>
         <div className="flex items-center justify-end space-x-2 py-4">
