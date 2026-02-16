@@ -108,6 +108,8 @@ const columns: ColumnDef<TransactionHistoryRow>[] = [
 ];
 
 function TransactionTable({ from, to }: { from: Date; to: Date }) {
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const history = useQuery<GetTransactionHistoryResType>({
     queryKey: ["transaction", "history", from, to],
     queryFn: () =>
@@ -118,6 +120,20 @@ function TransactionTable({ from, to }: { from: Date; to: Date }) {
           dateToUTCDate(to),
       ).then((res) => res.json()),
   });
+  const table = useReactTable({
+    data: history.data || [],
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    state: {
+      sorting,
+      columnFilters,
+    },
+    onSortingChange: setSorting,
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+  });
+
   const categoriesOptions = useMemo(() => {
     const categoriesMap = new Map();
     history.data?.forEach((transaction) => {
