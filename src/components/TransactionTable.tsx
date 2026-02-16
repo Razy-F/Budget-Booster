@@ -1,6 +1,28 @@
 import { GetTransactionHistoryResType } from "@/app/api/transaction-history/route";
 import { useQuery } from "@tanstack/react-query";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import SkeletonWrapper from "./SkeletonWrapper";
 import { DataTableColumnHeader } from "./dataTable/ColumnHeader";
+import { cn } from "@/lib/utils";
+import { DataTableFacetedFilter } from "./datatable/FacetedFilter";
+
+import { Button } from "./ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+
 export type TransactionHistoryRow = GetTransactionHistoryResType[0];
 const columns: ColumnDef<TransactionHistoryRow>[] = [
   {
@@ -78,6 +100,12 @@ const columns: ColumnDef<TransactionHistoryRow>[] = [
       );
     },
   },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => <RowActions transaction={row.original} />,
+  },
+];
 
 function TransactionTable({ from, to }: { from: Date; to: Date }) {
   const history = useQuery<GetTransactionHistoryResType>({
